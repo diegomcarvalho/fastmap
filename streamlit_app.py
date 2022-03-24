@@ -38,50 +38,32 @@ __email__ = "d.carvalho@ieee.org"
 __status__ = "Research"
 
 
-colnames = ["lat", "lon"]
+def show_file(uploaded_file, header, zoom):
+    if uploaded_file is not None:
+        stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+        string_data = stringio.read()
+        s = string_data.split()
 
-uploaded_file = st.file_uploader("Choose a file 1")
-uploaded_file2 = st.file_uploader("Choose a file 2")
+        if s[0].find("lat") == -1:
+            colnames = ["lat", "lon"]
+            df = pd.read_csv(uploaded_file, names=colnames, header=None)
+        else:
+            df = pd.read_csv(uploaded_file)
 
-if uploaded_file is not None:
-    # To read file as bytes:
-    data_load_state = st.text("Loading data...")
-    bytes_data = uploaded_file.getvalue()
-    # st.write(bytes_data)
+        st.subheader(f"{header} ({uploaded_file.name})")
+        st.map(df, zoom=zoom)
 
-    # To convert to a string based IO:
-    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
-    # st.write(stringio)
-
-    # To read file as string:
-    string_data = stringio.read()
-    # st.write(string_data)
-
-    # Can be used wherever a "file-like" object is accepted:
-    colnames = ["lat", "lon"]
-    df = pd.read_csv(uploaded_file, names=colnames, header=None)
-    data_load_state.text("Loading data...done!")
-    st.subheader("Fast geotag map 1")
-    st.map(df, zoom=10)
+    return
 
 
-if uploaded_file2 is not None:
-    # To read file as bytes:
-    data_load_state2 = st.text("Loading data...")
-    bytes_data2 = uploaded_file2.getvalue()
-    # st.write(bytes_data)
+zoom = st.sidebar.slider("Initial Zoom", 7, 15, 10, 1)
+upf1 = st.sidebar.file_uploader("Choose a File 1")
+upf2 = st.sidebar.file_uploader("Choose a File 2")
 
-    # To convert to a string based IO:
-    stringio2 = StringIO(uploaded_file2.getvalue().decode("utf-8"))
-    # st.write(stringio)
+# col1, col2 = st.columns(1)
 
-    # To read file as string:
-    string_data2 = stringio2.read()
-    # st.write(string_data)
+# with col1:
+show_file(upf1, "File 1", zoom)
 
-    # Can be used wherever a "file-like" object is accepted:
-    colnames = ["lat", "lon"]
-    df = pd.read_csv(uploaded_file2, names=colnames, header=None)
-    data_load_state2.text("Loading data...done!")
-    st.subheader("Fast geotag map 2")
-    st.map(df, zoom=10)
+# with col2:
+show_file(upf2, "File 2", zoom)
