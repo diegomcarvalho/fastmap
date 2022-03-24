@@ -23,7 +23,6 @@ SOFTWARE.
 """
 
 import streamlit as st
-import folium
 import pandas as pd
 import numpy as np
 from io import StringIO
