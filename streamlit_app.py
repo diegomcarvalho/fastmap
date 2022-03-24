@@ -40,7 +40,8 @@ __status__ = "Research"
 
 colnames = ["lat", "lon"]
 
-uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.file_uploader("Choose a file 1")
+uploaded_file2 = st.file_uploader("Choose a file 2")
 
 if uploaded_file is not None:
     # To read file as bytes:
@@ -60,5 +61,27 @@ if uploaded_file is not None:
     colnames = ["lat", "lon"]
     df = pd.read_csv(uploaded_file, names=colnames, header=None)
     data_load_state.text("Loading data...done!")
-    st.subheader("Fast geotag map")
+    st.subheader("Fast geotag map 1")
+    st.map(df, zoom=10)
+
+
+if uploaded_file2 is not None:
+    # To read file as bytes:
+    data_load_state2 = st.text("Loading data...")
+    bytes_data2 = uploaded_file2.getvalue()
+    # st.write(bytes_data)
+
+    # To convert to a string based IO:
+    stringio2 = StringIO(uploaded_file2.getvalue().decode("utf-8"))
+    # st.write(stringio)
+
+    # To read file as string:
+    string_data2 = stringio2.read()
+    # st.write(string_data)
+
+    # Can be used wherever a "file-like" object is accepted:
+    colnames = ["lat", "lon"]
+    df = pd.read_csv(uploaded_file2, names=colnames, header=None)
+    data_load_state2.text("Loading data...done!")
+    st.subheader("Fast geotag map 2")
     st.map(df, zoom=10)
