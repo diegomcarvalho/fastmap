@@ -49,6 +49,7 @@ def show_file(uploaded_file, header, zoom):
             df = pd.read_csv(uploaded_file, names=colnames, header=None)
         else:
             df = pd.read_csv(uploaded_file)
+            st.write(df.columns)
 
         st.subheader(f"{header} ({uploaded_file.name})")
         st.map(df, zoom=zoom)
@@ -56,7 +57,7 @@ def show_file(uploaded_file, header, zoom):
     return
 
 
-st.sidebar.header("MOBLAB (c) 2022 d.carvalho@ieee.org")
+st.sidebar.header("MOBLAB Cefet/RJ (c) 2022")
 zoom = st.sidebar.slider("Initial Zoom", 7, 15, 10, 1)
 upf1 = st.sidebar.file_uploader("Choose a File 1")
 upf2 = st.sidebar.file_uploader("Choose a File 2")
