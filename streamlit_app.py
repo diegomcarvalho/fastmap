@@ -56,6 +56,7 @@ def show_file(uploaded_file, header, zoom):
     return
 
 
+st.sidebar.header("MOBLAB (c) 2022 d.carvalho@ieee.org")
 zoom = st.sidebar.slider("Initial Zoom", 7, 15, 10, 1)
 upf1 = st.sidebar.file_uploader("Choose a File 1")
 upf2 = st.sidebar.file_uploader("Choose a File 2")
