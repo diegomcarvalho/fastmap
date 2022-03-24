@@ -48,8 +48,8 @@ def show_file(uploaded_file, header, zoom):
             colnames = ["lat", "lon"]
             df = pd.read_csv(uploaded_file, names=colnames, header=None)
         else:
-            df = pd.read_csv(uploaded_file)
-            st.write(df.columns)
+            df = pd.read_csv(uploaded_file, header=0, skipinitialspace=True)
+            df.rename(columns=lambda x: x.strip())
 
         st.subheader(f"{header} ({uploaded_file.name})")
         st.map(df, zoom=zoom)
